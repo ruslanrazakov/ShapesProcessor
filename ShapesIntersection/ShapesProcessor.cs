@@ -29,20 +29,24 @@ public class ShapesProcessor
             var axis = new Vector(-edge.Y, edge.X);
             axis.Normalize();
 
-            float minA = 0; float minB = 0; float maxA = 0; float maxB = 0;
-            ProjectPolygon(axis, polygon1, ref minA, ref maxA);
-            ProjectPolygon(axis, polygon2, ref minB, ref maxB);
+            float min1 = 0; float min2 = 0; float max1 = 0; float max2 = 0;
+            ProjectPolygon(axis, polygon1, ref min1, ref max1);
+            ProjectPolygon(axis, polygon2, ref min2, ref max2);
 
-            if (IntervalDistance(minA, maxA, minB, maxB) > 0)
+            if (IntervalDistance(min1, max1, min2, max2) > 0)
                 return false;
         }
 
         return true;
     }
 
-    private float IntervalDistance(float minA, float maxA, float minB, float maxB)
-        => minA < minB ? minB - maxA : minA - maxB;
-
+    /// <summary>
+    /// Checks polygon projection on axis and gets minimum and maximum interval
+    /// </summary>
+    /// <param name="axis"></param>
+    /// <param name="polygon"></param>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
     private void ProjectPolygon(Vector axis, Polygon polygon, ref float min, ref float max)
     {
         float dotProduct = axis.DotProduct(polygon.Points[0]);
@@ -64,4 +68,16 @@ public class ShapesProcessor
             }
         }
     }
+
+    /// <summary>
+    /// Calculate min and max distance between the intervals
+    /// The distance will be negative if the intervals overlap
+    /// </summary>
+    /// <param name="min1"></param>
+    /// <param name="max1"></param>
+    /// <param name="min2"></param>
+    /// <param name="max2"></param>
+    /// <returns></returns>
+    private float IntervalDistance(float min1, float max1, float min2, float max2)
+        => min1 < min2 ? min2 - max1 : min1 - max2;
 }
