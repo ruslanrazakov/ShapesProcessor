@@ -2,10 +2,10 @@ namespace ShapesIntersection;
 
 public struct Circle : IShape
 {
-    public Point Center { get; }
-    public double Radius { get; }
+    public Vector Center { get; }
+    public float Radius { get; }
 
-    public Circle(Point center, double radius)
+    public Circle(Vector center, float radius)
     {
         Center = center;
         Radius = radius;

@@ -58,11 +58,43 @@ public class ShapesProcessor
             ProjectPolygon(axis, polygon1, ref min1, ref max1);
             ProjectPolygon(axis, polygon2, ref min2, ref max2);
 
-            if (IntervalDistance(min1, max1, min2, max2) > 0)
-                return false;
+            if (IntervalDistance(min1, max1, min2, max2) > 0) return false;
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Use Polygon circle collision detection algorythm to check if  polygons intersects circle
+    /// </summary>
+    /// <param name="polygon1"></param>
+    /// <param name="polygon2"></param>
+    /// <returns></returns>
+    public bool HasIntersection(Polygon polygon, Circle circle)
+    {
+        List<Vector> normals = new List<Vector>();
+
+        foreach(var edge in polygon.Edges)
+        {
+            normals.Add(edge.Normalize());
+        }
+
+        normals.Add(GetPolygonCircleAxis(polygon, circle));
+        foreach (Vector axis in normals)
+        {
+            float min1 = 0; float min2 = 0; float max1 = 0; float max2 = 0;
+            ProjectPolygon(axis, polygon, ref min1, ref max1);
+            ProjectPolygon(axis, circle, ref min2, ref max2);
+            float intervalDistance = min1 < min2 ? min2 - max1 : min1 - max2;
+            if (intervalDistance >= 0) return false;
+        }
+        return true;
+    }
+
+    public bool HasIntersection(Circle circle1, Circle circle2)
+    {
+        Vector dv = circle2.Center - circle1.Center;
+        return dv.X * dv.X + dv.Y * dv.Y <= MathF.Pow(circle1.Radius + circle2.Radius, 2);
     }
 
     /// <summary>
@@ -84,14 +116,69 @@ public class ShapesProcessor
             {
                 min = dotProduct;
             }
-            else
+            else if (dotProduct > max)
             {
-                if (dotProduct > max)
-                {
-                    max = dotProduct;
-                }
+                max = dotProduct;
             }
         }
+    }
+
+    /// <summary>
+    /// Checks circle projection on axis and gets minimum and maximum interval
+    /// </summary>
+    /// <param name="axis"></param>
+    /// <param name="polygon"></param>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    private void ProjectPolygon(Vector axis, Circle circle, ref float min, ref float max)
+    {
+        Vector v1 = circle.Center - axis.Normalize() * circle.Radius;
+        Vector v2 = circle.Center + axis.Normalize() * circle.Radius;
+        Vector p1 = Project(v1, axis);
+        Vector p2 = Project(v2, axis);
+        float s1 = p1.DotProduct(axis);
+        float s2 = p2.DotProduct(axis);
+        if (s1 > s2)
+        {
+            min = s2;
+            max = s1;
+        }
+        else
+        {
+            min = s1;
+            max = s2;
+        }
+    }
+
+    private Vector GetPolygonCircleAxis(Polygon polygon, Circle circle)
+    {
+        Vector nearestVertex = FindClosestVertex(polygon, circle.Center);
+        Vector axis = circle.Center - nearestVertex;
+        Vector perp = new Vector(axis.Y, -axis.X);
+        return perp;
+    }
+
+    private Vector FindClosestVertex(Polygon polygon, Vector vertex)
+    {
+        float shortestDistance = Int32.MaxValue;
+        Vector closestVertex = polygon.Points[0];
+        foreach (var polygonVertex in polygon.Points)
+        {
+            float currentDistance =  vertex.DistanceSquared(polygonVertex);
+            if (currentDistance < shortestDistance)
+            {
+                closestVertex = polygonVertex;
+                shortestDistance = currentDistance;
+            }
+        }
+        return closestVertex;
+    }
+
+    private Vector Project(Vector vertex, Vector axis)
+    {
+        float dot = vertex.DotProduct(axis);
+        float mag = axis.LengthSquared();
+        return dot / mag * axis;
     }
 
     /// <summary>
