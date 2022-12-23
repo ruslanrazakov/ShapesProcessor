@@ -41,7 +41,6 @@ public struct Vector
     public float LengthSquared()
         => (X * X) + (Y * Y);
     
-
     public float DistanceSquared(Vector b)
     {
         float v1 = X - b.X, v2 = Y - b.Y;

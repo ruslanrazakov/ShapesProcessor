@@ -23,28 +23,28 @@ namespace ConsoleTest
                                     });
 
             ShapesProcessor processor = new();
-            bool areTrianglesIntersect = processor.HasIntersection(triangle1, triangle2);
+            bool isTrianglesIntersect = processor.HasIntersection(triangle1, triangle2);
 
-            Polygon square = new Polygon(new Vector[]
+            Polygon squis = new Polygon(new Vector[]
                                    {
                                         new Vector(3, 3),
                                         new Vector(4, 3),
                                         new Vector(4, 4),
                                         new Vector(3, 4),
                                    });
-            bool isFirstTriangleIntersectsSquare = processor.HasIntersection(triangle1, square);
-            bool isSecondTriangleIntersectsSquare = processor.HasIntersection(triangle2, square);
+            bool isFirstTriangleIntersectsSquis = processor.HasIntersection(triangle1, squis);
+            bool isSecondTriangleIntersectsSquis = processor.HasIntersection(triangle2, squis);
 
             // Foreground polygons test 1
             List<Polygon> pols1 = new()
             {
-                triangle1, triangle2, square
+                triangle1, triangle2, squis
             };
 
             var foregroundPols = processor.GetForegroundPolygons(pols1);
 
             // Foreground polygons test 2
-            Polygon square1 = new Polygon(new Vector[]
+            Polygon squis1 = new Polygon(new Vector[]
                                             {
                                                 new Vector(2, 1),
                                                 new Vector(3, 1),
@@ -52,7 +52,7 @@ namespace ConsoleTest
                                                 new Vector(2, 2),
                                             });
 
-            Polygon square2 = new Polygon(new Vector[]
+            Polygon squis2 = new Polygon(new Vector[]
                                             {
                                                 new Vector(5, 1),
                                                 new Vector(6, 1),
@@ -86,7 +86,7 @@ namespace ConsoleTest
 
             List<Polygon> pols2 = new()
             {
-                square1, square2, rectangle3, triangle4, rectangle5
+                squis1, squis2, rectangle3, triangle4, rectangle5
             };
 
             var foregroundPols2 = processor.GetForegroundPolygons(pols2);
@@ -127,10 +127,10 @@ namespace ConsoleTest
                                             });
 
 
-            bool areCircleAndP1Intersect = processor.HasIntersection(p1, circle);
-            bool areCircleAndP2Intersect = processor.HasIntersection(p2, circle);
-            bool areCircleAndP3Intersect = processor.HasIntersection(p3, circle);
-            bool areCircleAndP4Intersect = processor.HasIntersection(p4, circle);
+            bool isCircleAndP1Intersect = processor.HasIntersection(p1, circle);
+            bool isCircleAndP2Intersect = processor.HasIntersection(p2, circle);
+            bool isCircleAndP3Intersect = processor.HasIntersection(p3, circle);
+            bool isCircleAndP4Intersect = processor.HasIntersection(p4, circle);
 
 
             // Circle circle intersection test
@@ -138,10 +138,35 @@ namespace ConsoleTest
             Circle circle2 = new Circle(new Vector(3, 2), 1);
             Circle circle3 = new Circle(new Vector(4.5f, 2), 1);
 
-            bool areCircle1AndCircle2Intersect = processor.HasIntersection(circle1, circle2);
-            bool areCircle2AndCircle3Intersect = processor.HasIntersection(circle2, circle3);
-            bool areCircle1AndCircle3Intersect = processor.HasIntersection(circle1, circle3);
+            bool isCircle1AndCircle2Intersect = processor.HasIntersection(circle1, circle2);
+            bool isCircle2AndCircle3Intersect = processor.HasIntersection(circle2, circle3);
+            bool isCircle1AndCircle3Intersect = processor.HasIntersection(circle1, circle3);
 
+            //Lines and polygons intersection test
+            Polygon line1 = new Polygon(new Vector[] {new Vector(1,1), new Vector(5,1)});
+            Polygon line2 = new Polygon(new Vector[] {new Vector(1,3), new Vector(5,3)});
+            Polygon line3 = new Polygon(new Vector[] {new Vector(4,2), new Vector(1,4)});
+            Polygon line4 = new Polygon(new Vector[] {new Vector(1,5), new Vector(5,5)});
+
+            Polygon p5 = new Polygon(new Vector[]
+                                            {
+                                                new Vector(1, 4),
+                                                new Vector(2, 4),
+                                                new Vector(2, 5),
+                                                new Vector(1, 5),
+                                            });
+
+            bool isLine1AndPolygonIntersect = processor.HasIntersection(line1, p5);
+            bool isLine2AndPolygonIntersect = processor.HasIntersection(line2, p5);
+            bool isLine3AndPolygonIntersect = processor.HasIntersection(line3, p5);
+
+            //lines and shapes intersection test
+            Circle circle4 = new Circle(new Vector(3,3), 1);
+
+            bool isLine1AndCircle4Intersect = processor.HasIntersection(line1, circle4, true);
+            bool isLine2AndCircle4Intersect = processor.HasIntersection(line2, circle4, true);
+            bool isLine3AndCircle4Intersect = processor.HasIntersection(line3, circle4, true);
+            bool isLine4AndCircle4Intersect = processor.HasIntersection(line4, circle4, true);
         }
     }
 }

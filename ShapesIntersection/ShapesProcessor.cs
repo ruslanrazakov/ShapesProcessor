@@ -7,7 +7,6 @@ public class ShapesProcessor
 
     public List<Polygon> GetForegroundPolygons(IEnumerable<Polygon> polygons)
     {
-        Polygon target;
         var polygonsArray = polygons.ToArray();
         List<Polygon> foregrounds = new();
 
@@ -68,7 +67,7 @@ public class ShapesProcessor
     /// Use Polygon circle collision detection algorythm to check if  polygons intersects circle
     /// </summary>
     /// <param name="polygon1"></param>
-    /// <param name="polygon2"></param>
+    /// <param name="circle"></param>
     /// <returns></returns>
     public bool HasIntersection(Polygon polygon, Circle circle)
     {
@@ -89,6 +88,36 @@ public class ShapesProcessor
             if (intervalDistance >= 0) return false;
         }
         return true;
+    }
+
+    /// <summary>
+    /// Use circle projection on line to check if line intersects circle
+    /// Line AB and circle in point C
+    /// </summary>
+    /// <param name="line"></param>
+    /// <param name="circle"></param>
+    /// <returns></returns>
+    public bool HasIntersection(Polygon line, Circle circle, bool isline)
+    {
+        Vector lineStart = line.Points[0];
+        Vector lineEnd = line.Points[1];
+
+        Vector ac = circle.Center - lineStart;
+        Vector ab = lineEnd - lineStart;
+
+        float ab2 = ab.DotProduct(ab);
+        float acab = ac.DotProduct(ab);
+        float t = acab / ab2;
+
+        if (t < 0)
+            t = 0;
+        else if (t > 1)
+            t = 1;
+
+        Vector h = ((ab * t) + lineStart) - circle.Center;
+        float h2 = h.DotProduct(h);
+
+        return (h2 <= (circle.Radius * circle.Radius));
     }
 
     public bool HasIntersection(Circle circle1, Circle circle2)
