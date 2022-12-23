@@ -4,13 +4,36 @@ namespace ShapesIntersection;
 
 public class ShapesProcessor
 {
+
+    public List<Polygon> GetForegroundPolygons(IEnumerable<Polygon> polygons)
+    {
+        Polygon target;
+        var polygonsArray = polygons.ToArray();
+        List<Polygon> foregrounds = new();
+
+        for(int polsIndex = 0; polsIndex < polygonsArray.Length; polsIndex++)
+        {
+            for(int foregrIndex = 0; foregrIndex < foregrounds.Count; foregrIndex++)
+            {
+                if(HasIntersection(polygonsArray[polsIndex], foregrounds[foregrIndex]))
+                {
+                    foregrounds.RemoveAt(foregrIndex);
+                    foregrIndex--;
+                }
+            }
+            foregrounds.Add(polygonsArray[polsIndex]);
+        }
+        
+        return foregrounds;
+    }
+
     /// <summary>
     /// Use Separating Axis Theorem to check if two polygons intersects
     /// </summary>
     /// <param name="polygon1"></param>
     /// <param name="polygon2"></param>
     /// <returns></returns>
-    public bool GetIntersection(Polygon polygon1, Polygon polygon2)
+    public bool HasIntersection(Polygon polygon1, Polygon polygon2)
     {
         int pol1EdgesAmount = polygon1.EdgesCount;
         int pol2EdgesAmount = polygon2.EdgesCount;
@@ -30,6 +53,8 @@ public class ShapesProcessor
             axis.Normalize();
 
             float min1 = 0; float min2 = 0; float max1 = 0; float max2 = 0;
+
+            //poject polygons on axis
             ProjectPolygon(axis, polygon1, ref min1, ref max1);
             ProjectPolygon(axis, polygon2, ref min2, ref max2);
 
