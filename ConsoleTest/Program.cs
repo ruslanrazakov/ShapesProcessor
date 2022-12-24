@@ -25,6 +25,7 @@ namespace ConsoleTest
 
             ShapesProcessor processor = new();
             bool isTrianglesIntersect = processor.HasIntersection(triangle1, triangle2);
+           Console.WriteLine( triangle1.Intersect(triangle2));
 
             Polygon squis = new Polygon(new Vector[]
                                    {

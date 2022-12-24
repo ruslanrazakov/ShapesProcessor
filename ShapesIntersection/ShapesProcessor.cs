@@ -23,8 +23,8 @@ public class ShapesProcessor
             {
                 if(shapesArray[polsIndex].Intersects(foregrounds[foregrIndex]))
                 {
-                    Console.WriteLine($"{shapesArray[polsIndex]._colShape.Name} INTERSECTS {foregrounds[foregrIndex]._colShape.Name}");
-                    Console.WriteLine($"{foregrounds[foregrIndex]._colShape.Name} removed from foregrounds list");
+                    Console.WriteLine($"{shapesArray[polsIndex]._shape.Name} INTERSECTS {foregrounds[foregrIndex]._shape.Name}");
+                    Console.WriteLine($"{foregrounds[foregrIndex]._shape.Name} removed from foregrounds list");
 
                     foregrounds.RemoveAt(foregrIndex);
 
@@ -32,7 +32,7 @@ public class ShapesProcessor
                 }
             }
             foregrounds.Add(shapesArray[polsIndex]);
-            Console.WriteLine($"{shapesArray[polsIndex]._colShape.Name} added to foregrounds list");
+            Console.WriteLine($"{shapesArray[polsIndex]._shape.Name} added to foregrounds list");
 
         }
         

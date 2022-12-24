@@ -2,15 +2,15 @@ using ShapesIntersection.Shapes;
 
 public class CollisionObject
 {
-    public readonly Shape _colShape;
+    public readonly Shape _shape;
 
     public CollisionObject(Shape colShape)
     {
-        _colShape = colShape;
+        _shape = colShape;
     }
 
     public bool Intersects(CollisionObject other)
     {
-        return _colShape.IntersectVisit(other._colShape);
+        return _shape.IntersectVisit(other._shape);
     }
 }
