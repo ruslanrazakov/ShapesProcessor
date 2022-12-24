@@ -1,26 +1,39 @@
 using System;
+using ShapesIntersection.Shapes;
 
 namespace ShapesIntersection;
 
 public class ShapesProcessor
 {
 
-    public List<Polygon> GetForegroundPolygons(IEnumerable<Polygon> polygons)
+    public List<CollisionObject> GetForegroundPolygons(IEnumerable<Shape> polygons)
     {
-        var polygonsArray = polygons.ToArray();
-        List<Polygon> foregrounds = new();
+        List<CollisionObject> shapesArray = new();
 
-        for(int polsIndex = 0; polsIndex < polygonsArray.Length; polsIndex++)
+        foreach(var shape in polygons)
+        {
+            shapesArray.Add(new CollisionObject(shape));
+        }
+
+        List<CollisionObject> foregrounds = new();
+
+        for(int polsIndex = 0; polsIndex < shapesArray.Count; polsIndex++)
         {
             for(int foregrIndex = 0; foregrIndex < foregrounds.Count; foregrIndex++)
             {
-                if(HasIntersection(polygonsArray[polsIndex], foregrounds[foregrIndex]))
+                if(shapesArray[polsIndex].Intersects(foregrounds[foregrIndex]))
                 {
+                    Console.WriteLine($"{shapesArray[polsIndex]._colShape.Name} INTERSECTS {foregrounds[foregrIndex]._colShape.Name}");
+                    Console.WriteLine($"{foregrounds[foregrIndex]._colShape.Name} removed from foregrounds list");
+
                     foregrounds.RemoveAt(foregrIndex);
+
                     foregrIndex--;
                 }
             }
-            foregrounds.Add(polygonsArray[polsIndex]);
+            foregrounds.Add(shapesArray[polsIndex]);
+            Console.WriteLine($"{shapesArray[polsIndex]._colShape.Name} added to foregrounds list");
+
         }
         
         return foregrounds;

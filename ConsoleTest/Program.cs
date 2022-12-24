@@ -1,5 +1,6 @@
 ﻿
 using ShapesIntersection;
+using ShapesIntersection.Shapes;
 
 namespace ConsoleTest
 {
@@ -34,8 +35,9 @@ namespace ConsoleTest
                                    });
             bool isFirstTriangleIntersectsSquis = processor.HasIntersection(triangle1, squis);
             bool isSecondTriangleIntersectsSquis = processor.HasIntersection(triangle2, squis);
+            
+            
 
-            // Foreground polygons test 1
             List<Polygon> pols1 = new()
             {
                 triangle1, triangle2, squis
@@ -43,7 +45,10 @@ namespace ConsoleTest
 
             var foregroundPols = processor.GetForegroundPolygons(pols1);
 
+
+
             // Foreground polygons test 2
+            Console.WriteLine("**********************************************************");
             Polygon squis1 = new Polygon(new Vector[]
                                             {
                                                 new Vector(2, 1),
@@ -51,6 +56,7 @@ namespace ConsoleTest
                                                 new Vector(3, 2),
                                                 new Vector(2, 2),
                                             });
+            squis1.Name = "1";
 
             Polygon squis2 = new Polygon(new Vector[]
                                             {
@@ -59,7 +65,7 @@ namespace ConsoleTest
                                                 new Vector(6, 2),
                                                 new Vector(5, 2),
                                             });
-
+            squis2.Name = "2";
 
             Polygon rectangle3 = new Polygon(new Vector[]
                                             {
@@ -68,14 +74,14 @@ namespace ConsoleTest
                                                 new Vector(7, 3),
                                                 new Vector(1, 3),
                                             });
-
+            rectangle3.Name = "3";
             Polygon triangle4 = new Polygon(new Vector[]
                                             {
                                                 new Vector(9, 1),
                                                 new Vector(10, 3),
                                                 new Vector(8, 3)
                                             });
-
+            triangle4.Name = "4";
             Polygon rectangle5 = new Polygon(new Vector[]
                                             {
                                                 new Vector(3, 2),
@@ -84,16 +90,19 @@ namespace ConsoleTest
                                                 new Vector(3, 4),
                                             });
 
-            List<Polygon> pols2 = new()
+            rectangle5.Name = "5";
+            Circle circl = new Circle(new Vector(8, 4), 2);
+            circl.Name = "6";
+            List<Shape> pols2 = new()
             {
-                squis1, squis2, rectangle3, triangle4, rectangle5
+                squis1, squis2, rectangle3, triangle4, rectangle5, circl
             };
 
             var foregroundPols2 = processor.GetForegroundPolygons(pols2);
 
 
             // Circle polygon intersection test
-            Circle circle = new Circle(new Vector(2, 2), 1);
+            Circle circle = new Circle(new Vector(2, 3), 1);
             Polygon p1 = new Polygon(new Vector[]
                                             {
                                                 new Vector(1, 1),
@@ -125,7 +134,12 @@ namespace ConsoleTest
                                                 new Vector(4, 4),
                                                 new Vector(2, 4),
                                             });
+            List<Shape> pols3 = new()
+            {
+                p1, circle, p2, p3, p4
+            };
 
+            var dssd = processor.GetForegroundPolygons(pols3);
 
             bool isCircleAndP1Intersect = processor.HasIntersection(p1, circle);
             bool isCircleAndP2Intersect = processor.HasIntersection(p2, circle);
@@ -137,6 +151,11 @@ namespace ConsoleTest
             Circle circle1 = new Circle(new Vector(2, 2), 1);
             Circle circle2 = new Circle(new Vector(3, 2), 1);
             Circle circle3 = new Circle(new Vector(4.5f, 2), 1);
+
+            List<Shape>shapes = new List<Shape>(){circle1, circle2, circle3};
+
+            var fcirclesIntersection = processor.GetForegroundPolygons(shapes);
+
 
             bool isCircle1AndCircle2Intersect = processor.HasIntersection(circle1, circle2);
             bool isCircle2AndCircle3Intersect = processor.HasIntersection(circle2, circle3);

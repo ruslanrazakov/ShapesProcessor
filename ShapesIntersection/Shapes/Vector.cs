@@ -1,6 +1,6 @@
 using System;
 
-namespace ShapesIntersection;
+namespace ShapesIntersection.Shapes;
 
 public struct Vector
 {
