@@ -6,37 +6,34 @@ namespace ShapesIntersection;
 public class ShapesProcessor
 {
 
-    public List<CollisionObject> GetForegroundPolygons(IEnumerable<Shape> polygons)
+    public List<Shape> GetForegroundPolygons(IEnumerable<Shape> shapes)
     {
-        List<CollisionObject> shapesArray = new();
+        List<CollisionObject> collisionObjects = new();
 
-        foreach(var shape in polygons)
+        foreach(var shape in shapes)
         {
-            shapesArray.Add(new CollisionObject(shape));
+            collisionObjects.Add(new CollisionObject(shape));
         }
 
-        List<CollisionObject> foregrounds = new();
+        List<CollisionObject> noCollisionObjects = new();
 
-        for(int polsIndex = 0; polsIndex < shapesArray.Count; polsIndex++)
+        for(int colObjectIndex = 0; colObjectIndex < collisionObjects.Count; colObjectIndex++)
         {
-            for(int foregrIndex = 0; foregrIndex < foregrounds.Count; foregrIndex++)
+            for(int noCollisIndex = 0; noCollisIndex < noCollisionObjects.Count; noCollisIndex++)
             {
-                if(shapesArray[polsIndex].Intersects(foregrounds[foregrIndex]))
+                if(collisionObjects[colObjectIndex].Intersects(noCollisionObjects[noCollisIndex]))
                 {
-                    Console.WriteLine($"{shapesArray[polsIndex]._shape.Name} INTERSECTS {foregrounds[foregrIndex]._shape.Name}");
-                    Console.WriteLine($"{foregrounds[foregrIndex]._shape.Name} removed from foregrounds list");
+                    Console.WriteLine($"{collisionObjects[colObjectIndex]._shape.Name} INTERSECTS {noCollisionObjects[noCollisIndex]._shape.Name}");
+                    Console.WriteLine($"{noCollisionObjects[noCollisIndex]._shape.Name} removed from foregrounds list");
 
-                    foregrounds.RemoveAt(foregrIndex);
-
-                    foregrIndex--;
+                    noCollisionObjects.RemoveAt(noCollisIndex);
+                    noCollisIndex--;
                 }
             }
-            foregrounds.Add(shapesArray[polsIndex]);
-            Console.WriteLine($"{shapesArray[polsIndex]._shape.Name} added to foregrounds list");
-
+            noCollisionObjects.Add(collisionObjects[colObjectIndex]);
+            Console.WriteLine($"{collisionObjects[colObjectIndex]._shape.Name} added to foregrounds list");
         }
-        
-        return foregrounds;
+        return noCollisionObjects.Select(f=>f._shape).ToList();
     }
 
     /// <summary>
