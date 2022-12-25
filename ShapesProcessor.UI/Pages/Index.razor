@@ -3,49 +3,158 @@
 @using Blazor.Extensions
 @using Blazor.Extensions.Canvas
 @using Blazor.Extensions.Canvas.Canvas2D
+@using ShapesProcessor.UI.Shapes
 
 @inject IJSRuntime JS;
+<h4>Canvas size - 1500:500</h4>
+<canvas id="canvasbox" class="border" width="1500", height="500"></canvas>
 
-<div class="canvasBorder">
-   <canvas id="canvasbox" width="500", height="500"></canvas>
+ <div class="container">
+   <div class="row">
+        <div class="border col-sm">
+            <h4>Draw triangle!</h4>
+
+            <div class="container">
+                <div class="row">
+                    <label class="col-sm"  for="fp">First point:</label>
+                    <input class="col-sm" type="number" id="fp" name="fp" @bind="_triangle.A_x"><br><br>
+                    <input class="col-sm" type="number" id="fp" name="fp" @bind="_triangle.A_y"><br><br>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <label class="col-sm" for="sp">Second Point:</label>
+                    <input  class="col-sm" type="number" id="sp" name="sp"  @bind="_triangle.B_x"><br><br>
+                    <input  class="col-sm" type="number" id="sp" name="sp"  @bind="_triangle.B_y"><br><br>
+                </div>
+            </div>
+
+                <div class="container">
+                <div class="row">
+                    <label class="col-sm"  for="tp">Third point:</label>
+                    <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_triangle.C_x"><br><br>
+                    <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_triangle.C_y"><br><br>
+                </div>
+            </div>
+
+            <button class="btn btn-primary"  @onclick="DrawTriangle">Create Triangle</button>
+        </div>
+
+        <div class="border col-sm">
+            <h4>Draw Rectangle!</h4>
+
+            <div class="container">
+                <div class="row">
+                    <label class="col-sm"  for="fp">First point:</label>
+                    <input class="col-sm" type="number" id="fp" name="fp" @bind="_rectangle.A_x"><br><br>
+                    <input class="col-sm" type="number" id="fp" name="fp" @bind="_rectangle.A_y"><br><br>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <label class="col-sm" for="sp">Second Point:</label>
+                    <input  class="col-sm" type="number" id="sp" name="sp"  @bind="_rectangle.B_x"><br><br>
+                    <input  class="col-sm" type="number" id="sp" name="sp"  @bind="_rectangle.B_y"><br><br>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <label class="col-sm"  for="tp">Third point:</label>
+                    <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_rectangle.C_x"><br><br>
+                    <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_rectangle.C_y"><br><br>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <label class="col-sm"  for="tp">Fourth point:</label>
+                    <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_rectangle.D_x"><br><br>
+                    <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_rectangle.D_y"><br><br>
+                </div>
+            </div>
+
+            <button class="btn btn-primary"  @onclick="DrawRectangle">Create Rectangle</button>
+       </div>
+
+       <div class="border col-sm">
+            <h4>Draw circle!</h4>
+
+            <div class="container">
+                <div class="row">
+                    <label class="col-sm"  for="fp">Center:</label>
+                    <input class="col-sm" type="number" id="fp" name="fp" @bind="_circle.X"><br><br>
+                    <input class="col-sm" type="number" id="fp" name="fp" @bind="_circle.Y"><br><br>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <label class="col-sm" for="sp">Radius:</label>
+                    <input  class="col-sm" type="number" id="sp" name="sp"  @bind="_circle.Radius"><br><br>
+                </div>
+            </div>
+
+            <button class="btn btn-primary"  @onclick="DrawCircle">Create Circle</button>
+        </div>
+   </div>
 </div>
 
-  <label for="fp">First point:</label>
-  <input type="text" id="fp" name="fp" @bind="firstPoint"><br><br>
-  <label for="sp">Second Point:</label>
-  <input type="text" id="sp" name="sp"  @bind="secondPoint"><br><br>
-  <label for="tp">Third point:</label>
-  <input type="text" id="tp" name="tp"  @bind="thirdPoint"><br><br>
-  <button class="btn btn-primary"  @onclick="DrawTriangle">Create Triangle</button>
-  <button class="btn btn-primary"  @onclick="Clear">Clear</button>
+<button class="btn btn-primary"  @onclick="Clear">Clear</button>
 
 
 @code 
 {
     private int _width = 500;
     private int _height = 500;
-    private string firstPoint;
-    private string secondPoint;
-    private string thirdPoint;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if(firstRender)
-            await JS.InvokeAsync<string>("drawPolygon", new int[] { 50, 50, 50, 125, 150, 125 });
-    }
+    private Triangle _triangle = new();
+    private Rectangle _rectangle = new();
+    private Circle _circle = new();
+    private List<IShape> shapes = new();
 
     private async Task DrawTriangle()
     {
-        var points = firstPoint.Split(",");
-        var points2 = secondPoint.Split(",");
-        var points3 = thirdPoint.Split(",");
-        await JS.InvokeAsync<string>("drawPolygon", new string[] { points[0], points[1], points2[0], points2[0], points3[0], points3[1] });
+        await JS.InvokeAsync<string>("drawTriangle", new string[] 
+        { 
+            _triangle.A_x.ToString(), _triangle.A_y.ToString(), 
+            _triangle.B_x.ToString(), _triangle.B_y.ToString(), 
+            _triangle.C_x.ToString(), _triangle.C_y.ToString() 
+        });
 
+        shapes.Add(_triangle);
+        _triangle = new();
     }
 
-     private async Task Clear()
+    private async Task DrawRectangle()
+    {
+        await JS.InvokeAsync<string>("drawRectangle", new string[] 
+        {
+            _rectangle.A_x.ToString(), _rectangle.A_y.ToString(), 
+            _rectangle.B_x.ToString(), _rectangle.B_y.ToString(), 
+            _rectangle.C_x.ToString(), _rectangle.C_y.ToString(),
+            _rectangle.D_x.ToString(), _rectangle.D_y.ToString()
+        });
+        shapes.Add(_rectangle);
+        _rectangle = new();
+    }
+
+    private async Task DrawCircle()
+    {
+        await JS.InvokeAsync<string>("drawCircle", new string[] 
+        {
+            _circle.X.ToString(),
+            _circle.Y.ToString(),
+            _circle.Radius.ToString()
+        });
+        shapes.Add(_rectangle);
+        _rectangle = new();
+    }
+
+    private async Task Clear()
     {
         await JS.InvokeVoidAsync("clearCanvas");
-
     }
 }
