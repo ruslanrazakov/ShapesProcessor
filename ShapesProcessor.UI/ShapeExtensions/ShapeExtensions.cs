@@ -48,7 +48,7 @@ namespace ShapesProcessor.UI.ShapeExtensions
                 A_x = (int)triangle.Points[0].X, A_y = (int)triangle.Points[0].Y,
                 B_x = (int)triangle.Points[1].X, B_y = (int)triangle.Points[1].Y,
                 C_x = (int)triangle.Points[2].X, C_y = (int)triangle.Points[2].Y,
-                D_x = (int)triangle.Points[2].X, D_y = (int)triangle.Points[2].Y,
+                D_x = (int)triangle.Points[3].X, D_y = (int)triangle.Points[3].Y,
             };
 
         public static UI.Shapes.Circle ToUI_Circle(this ShapesIntersection.Shapes.Circle circle)
