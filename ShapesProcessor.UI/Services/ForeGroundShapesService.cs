@@ -15,8 +15,15 @@ namespace ShapesProcessor.UI.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// Gets foreground shapes from UI shape entities, using ShapeIntersection lib
+        /// maps UI shape entities to Lib shape entities.
+        /// </summary>
+        /// <param name="shapes">UI shape entities list</param>
+        /// <returns></returns>
         public List<IShape> GetForegrounds(IEnumerable<IShape> shapes)
         {
+            //TODO: create mapper service for this stuff
             List<ShapesIntersection.Shapes.Shape> shapesGeometries = new();
             foreach(var shape in shapes)
             {
@@ -39,6 +46,7 @@ namespace ShapesProcessor.UI.Services
 
             var foregrounds = _processor.GetForegroundPolygons(shapesGeometries);
             _logger.LogInformation($"{foregrounds.Count} FIGURES RECEIVED FROM LIBRARY");
+
 
             List<IShape> UIShapes = new();
             foreach (var shape in foregrounds)

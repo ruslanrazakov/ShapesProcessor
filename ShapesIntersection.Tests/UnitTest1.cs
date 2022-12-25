@@ -15,7 +15,16 @@ namespace ShapesIntersection.Tests
 		Polygon rectangle4;
 		Polygon rectangle5;
 		Polygon square1;
+
 		Circle circle1;
+		Circle circle2;
+		Circle circle3;
+		Circle circle4;
+
+		Polygon line1;
+		Polygon line2;
+		Polygon line3;
+		Polygon line4;
 
 		[SetUp]
 		public void Setup()
@@ -101,6 +110,19 @@ namespace ShapesIntersection.Tests
 			circle1 = new Circle(new Vector(8, 4), 2)
 			{ Guid = "Circle1" };
 
+			circle2 = new Circle(new Vector(2, 2), 1)
+			{ Guid = "Circle2" };
+
+			circle3 = new Circle(new Vector(3, 2), 1)
+			{ Guid = "Circle3" };
+
+			circle4 = new Circle(new Vector(4.5f, 2), 1)
+			{ Guid = "Circle4" };
+
+			line1 = new Polygon(new Vector[] { new Vector(1, 1), new Vector(5, 1) }) { Guid = "Line1" };
+			line2 = new Polygon(new Vector[] { new Vector(1, 3), new Vector(5, 3) }) { Guid = "Line2" };
+			line3 = new Polygon(new Vector[] { new Vector(4, 2), new Vector(1, 4) }) { Guid = "Line3" };
+			line4 = new Polygon(new Vector[] { new Vector(1, 5), new Vector(5, 5) }) { Guid = "Line4" };
 		}
 
 		[Test]
@@ -122,6 +144,31 @@ namespace ShapesIntersection.Tests
 		}
 
 		[Test]
+		public void CirclesIntersectionCommutativeTest()
+		{
+			Assert.IsTrue(circle2.Intersect(circle3));
+			Assert.IsTrue(circle3.Intersect(circle2));
+
+			Assert.IsFalse(circle2.Intersect(circle4));
+			Assert.IsFalse(circle4.Intersect(circle2));
+			
+		}
+
+		[Test]
+		public void LinesIntersectionCommutativeTest()
+		{
+			Assert.IsTrue(line1.Intersect(rectangle3));
+			Assert.IsTrue(rectangle3.Intersect(line1));
+
+			Assert.IsTrue(line1.Intersect(rectangle3));
+			Assert.IsTrue(rectangle3.Intersect(line1));
+
+			Assert.IsFalse(line4.Intersect(rectangle3));
+			Assert.IsFalse(rectangle3.Intersect(line4));
+
+		}
+
+		[Test]
 		public void PolygonsForegroundSearchTest1()
 		{
 			List<Polygon> pols1 = new()
@@ -134,7 +181,7 @@ namespace ShapesIntersection.Tests
 		}
 
 		[Test]
-		public void ShapesForegroundSearchTest()
+		public void ShapesForegroundSearchTest1()
 		{
 			List<Shape> pols2 = new()
 			{
@@ -152,5 +199,29 @@ namespace ShapesIntersection.Tests
 			Assert.That(shapeNames.Count == 2, Is.True);
 			Assert.That(shapeNames[0] == "Rectangle5" && shapeNames[1] == "Circle1", Is.True);
 		}
+
+		[Test]
+		public void ShapesForegroundSearchTest2()
+		{
+			List<Shape> pols2 = new()
+			{
+				line1,  circle4, line2, line4, rectangle4
+			};
+
+			var foregroundShapes = processor.GetForegroundPolygons(pols2);
+
+			List<string> shapeNames = new();
+			foreach (var shape in foregroundShapes)
+			{
+				shapeNames.Add(shape.Guid);
+			}
+
+			Assert.That(shapeNames.Count == 3, Is.True);
+			Assert.That(shapeNames[0] == "Line2" &&
+						shapeNames[1] == "Line4" && 
+						shapeNames[2] == "Rectangle4", Is.True);
+		}
+
+
 	}
 }

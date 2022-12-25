@@ -84,6 +84,12 @@ public static class Polygons
         }
     }
 
+    /// <summary>
+    /// Gets projection for circle
+    /// </summary>
+    /// <param name="vertex"></param>
+    /// <param name="axis"></param>
+    /// <returns></returns>
     public static Vector Project(Vector vertex, Vector axis)
     {
         float dot = vertex.DotProduct(axis);
