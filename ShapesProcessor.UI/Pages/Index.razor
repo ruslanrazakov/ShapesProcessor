@@ -1,13 +1,15 @@
 ﻿@page "/"
 
-@using Blazor.Extensions
-@using Blazor.Extensions.Canvas
-@using Blazor.Extensions.Canvas.Canvas2D
+@using ShapesProcessor.UI.Services
 @using ShapesProcessor.UI.Shapes
 
 @inject IJSRuntime JS;
+@inject IForegroundShapesService ShapesService
+
+
 <h4>Canvas size - 1500:500</h4>
-<canvas id="canvasbox" class="border" width="1500", height="500"></canvas>
+
+<canvas id="canvasbox" class="border" width="@_width" height="@_height"></canvas>
 
  <div class="container">
    <div class="row">
@@ -38,7 +40,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary"  @onclick="DrawTriangle">Create Triangle</button>
+            <button class="btn btn-primary"  @onclick="@(() => DrawTriangle(_triangle))">Create Triangle</button>
         </div>
 
         <div class="border col-sm">
@@ -76,7 +78,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary"  @onclick="DrawRectangle">Create Rectangle</button>
+            <button class="btn btn-primary"  @onclick="@(() => DrawRectangle(_rectangle))">Create Rectangle</button>
        </div>
 
        <div class="border col-sm">
@@ -97,26 +99,30 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary"  @onclick="DrawCircle">Create Circle</button>
+            <button class="btn btn-primary"  @onclick="@(() => DrawCircle(_circle))">Create Circle</button>
         </div>
    </div>
 </div>
 
-<button class="btn btn-primary"  @onclick="Clear">Clear</button>
+<button class="btn btn-danger" @onclick="Clear">Clear</button>
+<button class="btn btn-danger" @onclick="DrawRandom">Draw Random</button>
+<button class="btn btn-primary" @onclick="GetForegrounds">Get Foregrounds</button>
 
 
 @code 
 {
-    private int _width = 500;
+    private int _width = 1500;
     private int _height = 500;
 
     private Triangle _triangle = new();
     private Rectangle _rectangle = new();
     private Circle _circle = new();
-    private List<IShape> shapes = new();
 
-    private async Task DrawTriangle()
+    private List<IShape> _shapes = new();
+
+    private async Task DrawTriangle(Triangle triangle)
     {
+        //TODO: remove JS invoke to some JSWrapper
         await JS.InvokeAsync<string>("drawTriangle", new string[] 
         { 
             _triangle.A_x.ToString(), _triangle.A_y.ToString(), 
@@ -124,11 +130,11 @@
             _triangle.C_x.ToString(), _triangle.C_y.ToString() 
         });
 
-        shapes.Add(_triangle);
+        _shapes.Add(_triangle);
         _triangle = new();
     }
 
-    private async Task DrawRectangle()
+    private async Task DrawRectangle(Rectangle rectangle)
     {
         await JS.InvokeAsync<string>("drawRectangle", new string[] 
         {
@@ -137,11 +143,11 @@
             _rectangle.C_x.ToString(), _rectangle.C_y.ToString(),
             _rectangle.D_x.ToString(), _rectangle.D_y.ToString()
         });
-        shapes.Add(_rectangle);
+        _shapes.Add(_rectangle);
         _rectangle = new();
     }
 
-    private async Task DrawCircle()
+    private async Task DrawCircle(Circle circle)
     {
         await JS.InvokeAsync<string>("drawCircle", new string[] 
         {
@@ -149,12 +155,101 @@
             _circle.Y.ToString(),
             _circle.Radius.ToString()
         });
-        shapes.Add(_rectangle);
+        _shapes.Add(_circle);
         _rectangle = new();
     }
 
     private async Task Clear()
     {
+        _shapes = new();
+        _rectangle = new();
+        _triangle = new();
+        _circle = new();
         await JS.InvokeVoidAsync("clearCanvas");
+    }
+
+    /// <summary>
+    /// Get foreground shapes from UI shapes array
+    /// </summary>
+    /// <returns></returns>
+    private async Task GetForegrounds()
+    {
+        await JS.InvokeVoidAsync("clearCanvas");
+        var foregroundShapes = ShapesService.GetForegrounds(_shapes);
+
+        await DrawShapes(foregroundShapes);
+    }
+
+    /// <summary>
+    /// TODO: Create randomize servise, remove this from UI
+    /// </summary>
+    /// <returns></returns>
+    private async Task DrawRandom()
+    {
+        await Clear();
+
+        Random random = new Random();
+        List<IShape> randomShapes = new();
+
+        foreach(var shape in Enumerable.Range(0, 10))
+        {
+            int rectangleWidth = random.Next(0, 200);
+            int rectangleHeight = random.Next(0, 200);
+            int rectangleSpawnX = random.Next(0, _width);
+            int rectangleSpawnY = random.Next(0, _width);
+
+            int triangleSpawnX = random.Next(0, _width);
+            int triangleSpawnY = random.Next(0, _width);
+            int triangleWidth = random.Next(0, 100);
+
+            int choose = random.Next(1, 3);
+            if(choose == 1)
+            {
+                randomShapes.Add(new Rectangle()
+                {
+                    A_x = rectangleSpawnX,
+                    A_y = rectangleSpawnY,
+                    B_x = rectangleSpawnX + rectangleWidth,
+                    B_y = rectangleSpawnY,
+                    C_x = rectangleSpawnX + rectangleWidth,
+                    C_y = rectangleSpawnY + rectangleHeight,
+                    D_x = rectangleSpawnX,
+                    D_y = rectangleSpawnY + rectangleHeight,
+                });
+            }
+            else if(choose == 2)
+            {
+                randomShapes.Add(new Circle()
+                {
+                    Radius = random.Next(0, 100),
+                    X = random.Next(0, _width),
+                    Y = random.Next(0, _height),
+                });
+            }
+        }
+
+        await DrawShapes(randomShapes);
+    }
+
+    private async Task DrawShapes(List<IShape> shapes)
+    {
+        foreach(var shape in shapes)
+        {
+            if(shape.Type == ShapeType.Triangle)
+            {
+                _triangle = (Triangle)shape;
+                await DrawTriangle(_triangle);
+            }
+            if(shape.Type == ShapeType.Circle)
+            {
+                _circle = (Circle)shape;
+                await DrawCircle(_circle);
+            }
+            if(shape.Type == ShapeType.Rectangle)
+            {
+                _rectangle = (Rectangle)shape;
+                await DrawRectangle(_rectangle);
+            }
+        }
     }
 }

@@ -57,7 +57,7 @@ namespace ConsoleTest
                                                 new Vector(3, 2),
                                                 new Vector(2, 2),
                                             });
-            squis1.Name = "1";
+            squis1.Guid = "1";
 
             Polygon squis2 = new Polygon(new Vector[]
                                             {
@@ -66,7 +66,7 @@ namespace ConsoleTest
                                                 new Vector(6, 2),
                                                 new Vector(5, 2),
                                             });
-            squis2.Name = "2";
+            squis2.Guid = "2";
 
             Polygon rectangle3 = new Polygon(new Vector[]
                                             {
@@ -75,14 +75,14 @@ namespace ConsoleTest
                                                 new Vector(7, 3),
                                                 new Vector(1, 3),
                                             });
-            rectangle3.Name = "3";
+            rectangle3.Guid = "3";
             Polygon triangle4 = new Polygon(new Vector[]
                                             {
                                                 new Vector(9, 1),
                                                 new Vector(10, 3),
                                                 new Vector(8, 3)
                                             });
-            triangle4.Name = "4";
+            triangle4.Guid = "4";
             Polygon rectangle5 = new Polygon(new Vector[]
                                             {
                                                 new Vector(3, 2),
@@ -91,9 +91,9 @@ namespace ConsoleTest
                                                 new Vector(3, 4),
                                             });
 
-            rectangle5.Name = "5";
+            rectangle5.Guid = "5";
             Circle circl = new Circle(new Vector(8, 4), 2);
-            circl.Name = "6";
+            circl.Guid = "6";
             List<Shape> pols2 = new()
             {
                 squis1, squis2, rectangle3, triangle4, rectangle5, circl

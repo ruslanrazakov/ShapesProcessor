@@ -23,15 +23,15 @@ public class ShapesProcessor
             {
                 if(collisionObjects[colObjectIndex].Intersects(noCollisionObjects[noCollisIndex]))
                 {
-                    Console.WriteLine($"{collisionObjects[colObjectIndex]._shape.Name} INTERSECTS {noCollisionObjects[noCollisIndex]._shape.Name}");
-                    Console.WriteLine($"{noCollisionObjects[noCollisIndex]._shape.Name} removed from foregrounds list");
+                    Console.WriteLine($"{collisionObjects[colObjectIndex]._shape.Guid} INTERSECTS {noCollisionObjects[noCollisIndex]._shape.Guid}");
+                    Console.WriteLine($"{noCollisionObjects[noCollisIndex]._shape.Guid} removed from foregrounds list");
 
                     noCollisionObjects.RemoveAt(noCollisIndex);
                     noCollisIndex--;
                 }
             }
             noCollisionObjects.Add(collisionObjects[colObjectIndex]);
-            Console.WriteLine($"{collisionObjects[colObjectIndex]._shape.Name} added to foregrounds list");
+            Console.WriteLine($"{collisionObjects[colObjectIndex]._shape.Guid} added to foregrounds list");
         }
         return noCollisionObjects.Select(f=>f._shape).ToList();
     }

@@ -26,7 +26,7 @@ namespace ShapesIntersection.Tests
 										new Vector(3, 1),
 										new Vector(2, 3)
 								   })
-			{ Name = "Triangle1" };
+			{ Guid = "Triangle1" };
 
 			triangle2 = new Polygon(new Vector[]
 									{
@@ -34,7 +34,7 @@ namespace ShapesIntersection.Tests
 										new Vector(4, 2),
 										new Vector(3, 4)
 									})
-			{ Name = "Triangle2" };
+			{ Guid = "Triangle2" };
 
 			triangle3 = new Polygon(new Vector[]
 								   {
@@ -43,7 +43,7 @@ namespace ShapesIntersection.Tests
 										new Vector(4, 4),
 										new Vector(3, 4),
 								   })
-			{ Name = "Triangle3" };
+			{ Guid = "Triangle3" };
 
 			square1 = new Polygon(new Vector[]
 								   {
@@ -52,7 +52,7 @@ namespace ShapesIntersection.Tests
 										new Vector(4, 4),
 										new Vector(3, 4),
 								   })
-			{ Name = "Square1" };
+			{ Guid = "Square1" };
 
 			rectangle1 = new Polygon(new Vector[]
 										   {
@@ -61,7 +61,7 @@ namespace ShapesIntersection.Tests
 												new Vector(3, 2),
 												new Vector(2, 2),
 										   })
-			{ Name = "Rectangle1" };
+			{ Guid = "Rectangle1" };
 
 			rectangle2 = new Polygon(new Vector[]
 											{
@@ -70,7 +70,7 @@ namespace ShapesIntersection.Tests
 												new Vector(6, 2),
 												new Vector(5, 2),
 											})
-			{ Name = "Rectangle2" };
+			{ Guid = "Rectangle2" };
 
 			rectangle3 = new Polygon(new Vector[]
 											{
@@ -79,7 +79,7 @@ namespace ShapesIntersection.Tests
 												new Vector(7, 3),
 												new Vector(1, 3),
 											})
-			{ Name = "Rectangle3" };
+			{ Guid = "Rectangle3" };
 
 			rectangle4 = new Polygon(new Vector[]
 											{
@@ -87,7 +87,7 @@ namespace ShapesIntersection.Tests
 												new Vector(10, 3),
 												new Vector(8, 3)
 											})
-			{ Name = "Rectangle4" };
+			{ Guid = "Rectangle4" };
 
 			rectangle5 = new Polygon(new Vector[]
 											{
@@ -96,10 +96,10 @@ namespace ShapesIntersection.Tests
 												new Vector(4, 4),
 												new Vector(3, 4),
 											})
-			{ Name = "Rectangle5" };
+			{ Guid = "Rectangle5" };
 
 			circle1 = new Circle(new Vector(8, 4), 2)
-			{ Name = "Circle1" };
+			{ Guid = "Circle1" };
 
 		}
 
@@ -130,7 +130,7 @@ namespace ShapesIntersection.Tests
 			};
 
 			var foregroundShapes = processor.GetForegroundPolygons(pols1);
-			Assert.That(foregroundShapes.Count == 1 && foregroundShapes.First().Name == "Square1", Is.True);
+			Assert.That(foregroundShapes.Count == 1 && foregroundShapes.First().Guid == "Square1", Is.True);
 		}
 
 		[Test]
@@ -146,7 +146,7 @@ namespace ShapesIntersection.Tests
 			List<string> shapeNames = new();
 			foreach(var shape in foregroundShapes)
 			{
-				shapeNames.Add(shape.Name);
+				shapeNames.Add(shape.Guid);
 			}
 
 			Assert.That(shapeNames.Count == 2, Is.True);
