@@ -1,0 +1,51 @@
+﻿@page "/"
+
+@using Blazor.Extensions
+@using Blazor.Extensions.Canvas
+@using Blazor.Extensions.Canvas.Canvas2D
+
+@inject IJSRuntime JS;
+
+<div class="canvasBorder">
+   <canvas id="canvasbox" width="500", height="500"></canvas>
+</div>
+
+  <label for="fp">First point:</label>
+  <input type="text" id="fp" name="fp" @bind="firstPoint"><br><br>
+  <label for="sp">Second Point:</label>
+  <input type="text" id="sp" name="sp"  @bind="secondPoint"><br><br>
+  <label for="tp">Third point:</label>
+  <input type="text" id="tp" name="tp"  @bind="thirdPoint"><br><br>
+  <button class="btn btn-primary"  @onclick="DrawTriangle">Create Triangle</button>
+  <button class="btn btn-primary"  @onclick="Clear">Clear</button>
+
+
+@code 
+{
+    private int _width = 500;
+    private int _height = 500;
+    private string firstPoint;
+    private string secondPoint;
+    private string thirdPoint;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+            await JS.InvokeAsync<string>("drawPolygon", new int[] { 50, 50, 50, 125, 150, 125 });
+    }
+
+    private async Task DrawTriangle()
+    {
+        var points = firstPoint.Split(",");
+        var points2 = secondPoint.Split(",");
+        var points3 = thirdPoint.Split(",");
+        await JS.InvokeAsync<string>("drawPolygon", new string[] { points[0], points[1], points2[0], points2[0], points3[0], points3[1] });
+
+    }
+
+     private async Task Clear()
+    {
+        await JS.InvokeVoidAsync("clearCanvas");
+
+    }
+}

@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTest", "ConsoleTest\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesIntersection", "ShapesIntersection\ShapesIntersection.csproj", "{B705A1FD-C2A5-4E09-BD6A-230DD625699C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapesIntersection.Tests", "..\ShapesIntersection.Tests\ShapesIntersection.Tests.csproj", "{3B8FDFB2-77B4-4F55-9486-1AB7A4D59BA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesIntersection.Tests", "..\ShapesIntersection.Tests\ShapesIntersection.Tests.csproj", "{3B8FDFB2-77B4-4F55-9486-1AB7A4D59BA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapesProcessor.UI", "ShapesProcessor.UI\ShapesProcessor.UI.csproj", "{CD3A19B0-BB57-44C9-8922-59E20CF2C1AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{3B8FDFB2-77B4-4F55-9486-1AB7A4D59BA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B8FDFB2-77B4-4F55-9486-1AB7A4D59BA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B8FDFB2-77B4-4F55-9486-1AB7A4D59BA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD3A19B0-BB57-44C9-8922-59E20CF2C1AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD3A19B0-BB57-44C9-8922-59E20CF2C1AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD3A19B0-BB57-44C9-8922-59E20CF2C1AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD3A19B0-BB57-44C9-8922-59E20CF2C1AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
