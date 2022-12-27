@@ -15,7 +15,7 @@ TODO:
 In  ShapesProcessor.GetForegroundPolygons() method I used two nested loops, it is O(N^2) complexity, I think, I can change loops with some HashTable (Dictionary, for example), if I will have enough time for optimizations.
 
 ## 2. UI
-UI is WebAssembly application with C# and JavaScript. It is hosted in GitHub pages, here https://ruslanrazakov.github.io/ShapesProcessor/. There is not so much great UI, but a lot of functions:
+UI is WebAssembly application with C# and JavaScript. It is hosted in GitHub pages, here https://ruslanrazakov.github.io/ShapesProcessor/. The UI is not so awesome as Core lib, but it has a lot of great functions:
 - randomizer that creates 20 shapes on canvas
 - canvas cleaner
 - drawing Triangle
@@ -33,7 +33,7 @@ Application was deployed with GitHub pages for demo, you can build it yourself:
 `git clone https://github.com/ruslanrazakov/ShapesProcessor.git`
 
 `cd ShapesProcessor.UI`
-
+`dotnet build`
 `dotnet run`
 
 Or publish for hosting:
@@ -42,4 +42,4 @@ Or publish for hosting:
 
 ## 5. TODO
 1. No async implementation. Core logic in ShapesProcessor.GetForegroundPolygons() is based on 2 arrays - array of input shapes, and foreground shapes. Foreground shapes array change every iteration, and we dont know, what will happen with a new shape from input (collision or nothing). We will see complete array of foreground shapes after loop finishes, so there cant be intermediate result of foreground shapes. Maybe, there is another and more effective good algorythm to detect collisions between objects, I dont know.
-2. No area count of shapes
+2. No area count of shapes (treashold)
