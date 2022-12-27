@@ -11,14 +11,14 @@
 
 <canvas id="canvasbox" class="border" width="@_width" height="@_height"></canvas>
 
- <div class="container">
+ <div class="container" style="margin-left: 0px; margin-right: 0px">
    <div class="row">
-        <div class="border col-sm">
+        <div class="border col">
             <h4>Draw triangle!</h4>
 
             <div class="container">
                 <div class="row">
-                    <label class="col-sm"  for="fp">First point:</label>
+                    <label class="col"  for="fp">First point:</label>
                     <input class="col-sm" type="number" id="fp" name="fp" @bind="_triangle.A_x"><br><br>
                     <input class="col-sm" type="number" id="fp" name="fp" @bind="_triangle.A_y"><br><br>
                 </div>
@@ -26,7 +26,7 @@
 
             <div class="container">
                 <div class="row">
-                    <label class="col-sm" for="sp">Second Point:</label>
+                    <label class="col" for="sp">Second Point:</label>
                     <input  class="col-sm" type="number" id="sp" name="sp"  @bind="_triangle.B_x"><br><br>
                     <input  class="col-sm" type="number" id="sp" name="sp"  @bind="_triangle.B_y"><br><br>
                 </div>
@@ -34,21 +34,25 @@
 
                 <div class="container">
                 <div class="row">
-                    <label class="col-sm"  for="tp">Third point:</label>
+                    <label class="col"  for="tp">Third point:</label>
                     <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_triangle.C_x"><br><br>
                     <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_triangle.C_y"><br><br>
                 </div>
             </div>
 
-            <button class="btn btn-primary"  @onclick="@(() => DrawTriangle(_triangle))">Create Triangle</button>
+             <div class="container">
+                <div class="row">
+                    <button class="btn btn-primary" style="margin:1%" @onclick="@(() => DrawTriangle(_triangle))">Create Triangle</button>
+                </div>
+            </div>
         </div>
 
-        <div class="border col-sm">
+        <div class="border col">
             <h4>Draw Rectangle!</h4>
 
             <div class="container">
                 <div class="row">
-                    <label class="col-sm"  for="fp">First point:</label>
+                    <label class="col"  for="fp">First point:</label>
                     <input class="col-sm" type="number" id="fp" name="fp" @bind="_rectangle.A_x"><br><br>
                     <input class="col-sm" type="number" id="fp" name="fp" @bind="_rectangle.A_y"><br><br>
                 </div>
@@ -56,7 +60,7 @@
 
             <div class="container">
                 <div class="row">
-                    <label class="col-sm" for="sp">Second Point:</label>
+                    <label class="col" for="sp">Second Point:</label>
                     <input  class="col-sm" type="number" id="sp" name="sp"  @bind="_rectangle.B_x"><br><br>
                     <input  class="col-sm" type="number" id="sp" name="sp"  @bind="_rectangle.B_y"><br><br>
                 </div>
@@ -64,7 +68,7 @@
 
             <div class="container">
                 <div class="row">
-                    <label class="col-sm"  for="tp">Third point:</label>
+                    <label class="col"  for="tp">Third point:</label>
                     <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_rectangle.C_x"><br><br>
                     <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_rectangle.C_y"><br><br>
                 </div>
@@ -72,16 +76,19 @@
 
             <div class="container">
                 <div class="row">
-                    <label class="col-sm"  for="tp">Fourth point:</label>
+                    <label class="col"  for="tp">Fourth point:</label>
                     <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_rectangle.D_x"><br><br>
                     <input  class="col-sm" type="number" id="tp" name="tp"  @bind="_rectangle.D_y"><br><br>
                 </div>
             </div>
-
-            <button class="btn btn-primary"  @onclick="@(() => DrawRectangle(_rectangle))">Create Rectangle</button>
+            <div class="container">
+                <div class="row">
+                    <button class="btn btn-primary"  style="margin:1%" @onclick="@(() => DrawRectangle(_rectangle))">Create Rectangle</button>
+                </div>
+            </div>
        </div>
 
-       <div class="border col-sm">
+       <div class="border col">
             <h4>Draw circle!</h4>
 
             <div class="container">
@@ -98,8 +105,11 @@
                     <input  class="col-sm" type="number" id="sp" name="sp"  @bind="_circle.Radius"><br><br>
                 </div>
             </div>
-
-            <button class="btn btn-primary"  @onclick="@(() => DrawCircle(_circle))">Create Circle</button>
+            <div class="container">
+               <div class="row">
+                    <button class="btn btn-primary"  style="margin:1%" @onclick="@(() => DrawCircle(_circle))">Create Circle</button>
+                </div>
+            </div>
         </div>
    </div>
 </div>
@@ -122,7 +132,6 @@
 
     private async Task DrawTriangle(Triangle triangle)
     {
-        //TODO: remove JS invoke to some JSWrapper
         await JS.InvokeAsync<string>("drawTriangle", new string[] 
         { 
             _triangle.A_x.ToString(), _triangle.A_y.ToString(), 
@@ -200,9 +209,11 @@
 
             int triangleSpawnX = random.Next(0, _width);
             int triangleSpawnY = random.Next(0, _width);
-            int triangleWidth = random.Next(0, 100);
+            int triangleWidth = random.Next(triangleSpawnX, triangleSpawnX + 200);
+            int triangleHeight = random.Next(0, 200);
+            int triangleBaseY = triangleSpawnY - triangleHeight;
 
-            int choose = random.Next(1, 3);
+            int choose = random.Next(1, 4);
             if(choose == 1)
             {
                 randomShapes.Add(new Rectangle()
@@ -224,6 +235,18 @@
                     Radius = random.Next(0, 100),
                     X = random.Next(0, _width),
                     Y = random.Next(0, _height),
+                });
+            }
+            else if(choose == 3)
+            {
+                randomShapes.Add(new Triangle()
+                {
+                    A_x = triangleSpawnX,
+                    A_y = triangleSpawnY,
+                    B_x = triangleSpawnX + triangleHeight,
+                    B_y = triangleBaseY,
+                    C_x = triangleSpawnX - triangleHeight,
+                    C_y = triangleBaseY,
                 });
             }
         }

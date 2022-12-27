@@ -8,6 +8,7 @@ namespace ConsoleTest
     {
         static void Main()
         {
+            //tests were moved to ShapeIntersection.Tests project
         }
     }
 }
