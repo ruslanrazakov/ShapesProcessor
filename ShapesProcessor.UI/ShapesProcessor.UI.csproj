@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ShapesIntersection\ShapesProcessor.Lib.csproj" />
+    <ProjectReference Include="..\ShapesProcessor.Lib\ShapesProcessor.Lib.csproj" />
   </ItemGroup>
 
 </Project>

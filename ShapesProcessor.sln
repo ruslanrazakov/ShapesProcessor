@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesProcessor.Lib", "ShapesIntersection\ShapesProcessor.Lib.csproj", "{B705A1FD-C2A5-4E09-BD6A-230DD625699C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesProcessor.Lib", "ShapesProcessor.Lib\ShapesProcessor.Lib.csproj", "{B705A1FD-C2A5-4E09-BD6A-230DD625699C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesIntersection.Tests", "ShapesIntersection.Tests\ShapesIntersection.Tests.csproj", "{3B8FDFB2-77B4-4F55-9486-1AB7A4D59BA2}"
 EndProject
