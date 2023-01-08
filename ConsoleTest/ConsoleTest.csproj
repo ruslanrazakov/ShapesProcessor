@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\ShapesIntersection\ShapesIntersection.csproj" />
+    <ProjectReference Include="..\ShapesIntersection\ShapesProcessor.Lib.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -9,7 +9,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddSingleton<ShapesIntersection.ShapesProcessor>();
+builder.Services.AddSingleton<ShapesProcessor.Lib.ShapesProcessor>();
 builder.Services.AddSingleton<IForegroundShapesService, ForegroundShapesService>();
+builder.Services.AddSingleton<IShapesGenerator, ShapesGenerator>();
 
 await builder.Build().RunAsync();

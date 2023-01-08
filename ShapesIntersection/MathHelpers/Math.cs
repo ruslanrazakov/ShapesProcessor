@@ -1,6 +1,6 @@
-using ShapesIntersection.Shapes;
+using ShapesProcessor.Lib.Shapes;
 
-namespace ShapesIntersection.MathHelpers;
+namespace ShapesProcessor.Lib.MathHelpers;
 
 public static class Polygons
 {

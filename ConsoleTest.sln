@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{DAB88B06-4938-43FC-93F1-1878FAF2F0A0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesIntersection", "ShapesIntersection\ShapesIntersection.csproj", "{B705A1FD-C2A5-4E09-BD6A-230DD625699C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesProcessor.Lib", "ShapesIntersection\ShapesProcessor.Lib.csproj", "{B705A1FD-C2A5-4E09-BD6A-230DD625699C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesIntersection.Tests", "ShapesIntersection.Tests\ShapesIntersection.Tests.csproj", "{3B8FDFB2-77B4-4F55-9486-1AB7A4D59BA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapesProcessor.UI", "ShapesProcessor.UI\ShapesProcessor.UI.csproj", "{CD3A19B0-BB57-44C9-8922-59E20CF2C1AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesProcessor.UI", "ShapesProcessor.UI\ShapesProcessor.UI.csproj", "{CD3A19B0-BB57-44C9-8922-59E20CF2C1AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DAB88B06-4938-43FC-93F1-1878FAF2F0A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DAB88B06-4938-43FC-93F1-1878FAF2F0A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DAB88B06-4938-43FC-93F1-1878FAF2F0A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DAB88B06-4938-43FC-93F1-1878FAF2F0A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B705A1FD-C2A5-4E09-BD6A-230DD625699C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B705A1FD-C2A5-4E09-BD6A-230DD625699C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B705A1FD-C2A5-4E09-BD6A-230DD625699C}.Release|Any CPU.ActiveCfg = Release|Any CPU

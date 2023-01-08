@@ -1,4 +1,4 @@
-﻿using ShapesIntersection.Shapes;
+﻿using ShapesProcessor.UI.Shapes;
 
 namespace ShapesProcessor.UI.Shapes
 {

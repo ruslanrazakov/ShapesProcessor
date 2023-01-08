@@ -1,7 +1,7 @@
 using System.Drawing;
 using System;
 
-namespace ShapesIntersection.Shapes;
+namespace ShapesProcessor.Lib.Shapes;
 
 public class Polygon : Shape
 {

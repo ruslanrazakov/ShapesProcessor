@@ -1,7 +1,7 @@
 using System;
-using ShapesIntersection.Shapes;
+using ShapesProcessor.Lib.Shapes;
 
-namespace ShapesIntersection;
+namespace ShapesProcessor.Lib;
 
 public class ShapesProcessor
 {

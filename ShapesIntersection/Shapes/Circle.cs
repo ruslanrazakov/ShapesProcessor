@@ -1,4 +1,4 @@
-namespace ShapesIntersection.Shapes;
+namespace ShapesProcessor.Lib.Shapes;
 
 public class Circle : Shape
 {

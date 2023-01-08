@@ -5,6 +5,7 @@
 
 @inject IJSRuntime JS;
 @inject IForegroundShapesService ShapesService
+@inject IShapesGenerator ShapesGenerator
 
 
 <h4>Canvas size - 1500:500</h4>
@@ -174,83 +175,21 @@
         _rectangle = new();
         _triangle = new();
         _circle = new();
+
         await JS.InvokeVoidAsync("clearCanvas");
     }
 
-    /// <summary>
-    /// Get foreground shapes from UI shapes array
-    /// </summary>
-    /// <returns></returns>
     private async Task GetForegrounds()
     {
-        await JS.InvokeVoidAsync("clearCanvas");
         var foregroundShapes = ShapesService.GetForegrounds(_shapes);
-
+        await JS.InvokeVoidAsync("clearCanvas");
         await DrawShapes(foregroundShapes);
     }
 
-    /// <summary>
-    /// TODO: Create randomize servise, remove this from UI
-    /// </summary>
-    /// <returns></returns>
     private async Task DrawRandom()
     {
         await Clear();
-
-        Random random = new Random();
-        List<IShape> randomShapes = new();
-
-        foreach(var shape in Enumerable.Range(0, 15))
-        {
-            int rectangleWidth = random.Next(0, 200);
-            int rectangleHeight = random.Next(0, 200);
-            int rectangleSpawnX = random.Next(0, _width);
-            int rectangleSpawnY = random.Next(0, _width);
-
-            int triangleSpawnX = random.Next(0, _width);
-            int triangleSpawnY = random.Next(0, _width);
-            int triangleWidth = random.Next(triangleSpawnX, triangleSpawnX + 200);
-            int triangleHeight = random.Next(0, 200);
-            int triangleBaseY = triangleSpawnY - triangleHeight;
-
-            int choose = random.Next(1, 4);
-            if(choose == 1)
-            {
-                randomShapes.Add(new Rectangle()
-                {
-                    A_x = rectangleSpawnX,
-                    A_y = rectangleSpawnY,
-                    B_x = rectangleSpawnX + rectangleWidth,
-                    B_y = rectangleSpawnY,
-                    C_x = rectangleSpawnX + rectangleWidth,
-                    C_y = rectangleSpawnY + rectangleHeight,
-                    D_x = rectangleSpawnX,
-                    D_y = rectangleSpawnY + rectangleHeight,
-                });
-            }
-            else if(choose == 2)
-            {
-                randomShapes.Add(new Circle()
-                {
-                    Radius = random.Next(0, 100),
-                    X = random.Next(0, _width),
-                    Y = random.Next(0, _height),
-                });
-            }
-            else if(choose == 3)
-            {
-                randomShapes.Add(new Triangle()
-                {
-                    A_x = triangleSpawnX,
-                    A_y = triangleSpawnY,
-                    B_x = triangleSpawnX + triangleHeight,
-                    B_y = triangleBaseY,
-                    C_x = triangleSpawnX - triangleHeight,
-                    C_y = triangleBaseY,
-                });
-            }
-        }
-
+        var randomShapes = ShapesGenerator.GetRandom(amount: 15, width: _width, height: _height);
         await DrawShapes(randomShapes);
     }
 

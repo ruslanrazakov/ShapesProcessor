@@ -1,4 +1,4 @@
-using ShapesIntersection.Shapes;
+using ShapesProcessor.Lib.Shapes;
 
 public class CollisionObject
 {

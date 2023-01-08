@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ShapesIntersection\ShapesIntersection.csproj" />
+    <ProjectReference Include="..\ShapesIntersection\ShapesProcessor.Lib.csproj" />
   </ItemGroup>
 
 </Project>

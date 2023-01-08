@@ -1,4 +1,4 @@
-﻿using ShapesIntersection.Shapes;
+﻿using ShapesProcessor.Lib.Shapes;
 using ShapesProcessor.UI.Shapes;
 
 namespace ShapesProcessor.UI.ShapeExtensions
@@ -13,7 +13,7 @@ namespace ShapesProcessor.UI.ShapeExtensions
                                     new Vector(triangle.C_x, triangle.C_y)
                                 })
                                 { 
-                                    Figure = ShapesIntersection.Shapes.ShapeType.Polygon
+                                    Figure = ShapesProcessor.Lib.Shapes.ShapeType.Polygon
                                 };
 
         public static Polygon ConvertToGeometry(this Rectangle rect)
@@ -25,13 +25,13 @@ namespace ShapesProcessor.UI.ShapeExtensions
                                     new Vector(rect.D_x, rect.D_y)
                                 })
                                 {
-                                    Figure = ShapesIntersection.Shapes.ShapeType.Polygon
+                                    Figure = ShapesProcessor.Lib.Shapes.ShapeType.Polygon
                                 };
 
-        public static ShapesIntersection.Shapes.Circle ConvertToGeometry(this UI.Shapes.Circle circle)
-           => new ShapesIntersection.Shapes.Circle(new Vector(circle.X, circle.Y), circle.Radius) 
+        public static ShapesProcessor.Lib.Shapes.Circle ConvertToGeometry(this UI.Shapes.Circle circle)
+           => new ShapesProcessor.Lib.Shapes.Circle(new Vector(circle.X, circle.Y), circle.Radius) 
                                    {
-                                       Figure = ShapesIntersection.Shapes.ShapeType.Circle
+                                       Figure = ShapesProcessor.Lib.Shapes.ShapeType.Circle
                                    };
 
         public static Triangle ToUI_Triangle(this Polygon triangle)
@@ -51,7 +51,7 @@ namespace ShapesProcessor.UI.ShapeExtensions
                 D_x = (int)triangle.Points[3].X, D_y = (int)triangle.Points[3].Y,
             };
 
-        public static UI.Shapes.Circle ToUI_Circle(this ShapesIntersection.Shapes.Circle circle)
+        public static UI.Shapes.Circle ToUI_Circle(this ShapesProcessor.Lib.Shapes.Circle circle)
           => new()
           {
               X = (int)circle.Center.X,
